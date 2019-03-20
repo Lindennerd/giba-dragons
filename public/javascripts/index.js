@@ -1,6 +1,6 @@
 var app = angular.module('giba',  []);
 
-app.value('apiAddress', 'http://5c4b2a47aa8ee500142b4887.mockapi.io/api/v1/dragon');
+app.value('apiAddress', '/dragons');
 
 app.factory('apiFactory', function($http, apiAddress) {
     return $http({
