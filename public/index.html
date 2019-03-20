@@ -1,0 +1,88 @@
+<html>
+
+<head>
+  <title>Express</title>
+  <link rel="stylesheet" href="/bulma/css/bulma.min.css">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+  <script src="/angular/angular.min.js"></script>
+  <script src="/javascripts/index.js"></script>
+
+  <div ng-app="giba" class="container is-fluid">
+    <div ng-controller="indexController">
+      <div class="columns">
+        <div id="dragons-list" class="collumn">
+          <table class="table">
+            <thead>
+              <tr>
+                <td>Nome</td>
+                <td>Tipo</td>
+                <td>Criado Em</td>
+                <td>Aparece Em</td>
+                <td>Ações</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-if="!dragons"><td colspan="5"> Carregando...</td></tr>
+              <tr ng-repeat="dragon in dragons track by dragon.id" ng-if="dragons">
+                <td>
+                  <span ng-show="!dragon.editing">{{dragon.name}}</span>
+                  <input type="text" class="input" ng-model="dragon.name" ng-show="dragon.editing">
+                </td>
+                <td>
+                  <span ng-show="!dragon.editing">{{dragon.type}}</span>
+                  <input type="text" class="input" ng-model="dragon.type" 
+                    ng-show="dragon.editing" list="dragonTypes">          
+                  
+                </td>
+                <td>{{dragon.createdAt | date:'dd/MM/yyyy'}}</td>
+                <td>
+                  <span ng-show="!dragon.editing">{{dragon.histories.join(',')}}</span>
+                  <input type="text" class="input" ng-model="dragon.histories" ng-show="dragon.editing">                                     
+                </td>
+                <td>
+                  <button ng-click="edit(dragon)" class="button" ng-show="!dragon.editing">Editar</button>
+                  <button ng-click="save(dragon)" class="button is-success" ng-show="dragon.editing">Salvar</button>
+                  <button ng-click="remove(dragon)" class="button is-danger">Remover</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="column">
+          <form name="dragonForm">
+            <div class="field">
+              <label for="name">Nome</label>
+              <div class="control">
+                <input type="text" class="input" name="name" ng-model="dragon.name">
+              </div>
+            </div>
+            <div class="field">
+              <label for="type">Tipo</label>
+              <div class="control">
+                <input type="text" class="input" name="type" list="types" ng-model="dragon.type">
+                <datalist id="types">
+                  <option ng-repeat="type in dragonTypes">{{type}}</option>
+                </datalist>
+              </div>
+            </div>
+            <div class="field">
+              <label for="histories">Aparece Em</label>
+              <div class="control">
+                <input type="text" name="histories" class="input" ng-model="dragon.histories"
+                  placeholder="Escreva o nome das histórias separados por vírgula">
+              </div>
+            </div>
+
+            <input type="submit" value="Salvar" class="button is-success" 
+              ng-click="saveNewDragon(dragon)">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
